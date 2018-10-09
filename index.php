@@ -1,5 +1,13 @@
+<?php 
+
+
+   require_once 'clases/Funciones.php';
+  
+
+  $fun = new Funciones();    
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
   <head>
 
@@ -23,6 +31,41 @@
 
     <!-- Custom styles for this template -->
     <link href="css/freelancer.min.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+
+
+
+
+    <script type="text/javascript">
+        $(document).ajaxStart(function() {
+          $("#formbuscar").hide();
+          $("#loading").show();
+             }).ajaxStop(function() {
+          $("#loading").hide();
+          $("#formbuscar").show();
+          });  
+
+  $(document).ready(function() {
+          $("#formbuscar").submit(function() {    
+            $.ajax({
+              type: "POST",
+              url: 'vista/vistaBuscar.php',
+              data:$("#formbuscar").serialize(),
+              success: function (result) { 
+              console.log('entra');
+              document.getElementById("container").innerHTML = result;
+                
+              },
+              error: function(){
+                      alert('Verifique los datos')      
+              }
+            });
+            return false;
+          });
+        });    
+    </script>
 
   </head>
 
@@ -51,20 +94,33 @@
         </div>
       </div>
     </nav>
-
+  <div id="loading" style="display: none;">
+    <center><img src="img/load.gif"></center>
+  </div>
+<form id="formbuscar" onsubmit="return false;"  >
     <!-- Header -->
     <header class="masthead bg-primary text-white text-center" id="mainCont">
-      <div class="container">
+      <div class="container" id="container">
         
         <h1 class="text-uppercase mb-0">Busca lo que necesites!</h1>
 
         <hr class="star-light">
             <div class="row">
               
-              
+            
                 <div class="col-lg-4">
-                  <select name="comuna" id="comuna" class="form-control">
-                    <option>Comuna</option>
+                  <select name="comuna" id="comuna" class="form-control" required>
+                    <option value="" selected disabled>Seleccione la Comuna</option>
+                                       <?php 
+                                        $re = $fun->cargar_comunas(1);   
+                                        foreach($re as $row)      
+                                            {
+                                              ?>
+                                               <option value="<?php echo $row['id_comuna'] ?>"><?php echo $row['nom_comuna'] ?></option>
+                                                  
+                                              <?php
+                                            }    
+                                        ?>       
                   </select>
                 </div>
                 <div class="col-lg-4">
@@ -73,7 +129,7 @@
                 <div class="col-lg-3">
                   <input class="btn btn-dark" type="submit" name="buscar" id="buscar" value="Buscar">
                 </div>
-
+</form>
               
             </div>
             <h2 class="font-weight-light mb-0">Busca - Contacta - Evalua</h2>
