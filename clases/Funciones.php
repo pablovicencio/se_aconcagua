@@ -22,12 +22,14 @@ class Funciones
 
                             
                                 $sql = "select distinct * from (
-select id_anuncio, nom_anuncio,cat_anuncio 
-from anuncios where (nom_anuncio like :anu or desc_anuncio like :anu) and comuna_anuncio = :com and vig_anuncio = 1
+select a.id_anuncio, a.nom_anuncio,a.cat_anuncio , ROUND((sum(b.nota_puntaje)/count(b.id_puntaje)), 0) puntaje
+from anuncios a inner join puntaje b on a.id_anuncio = b.fk_anuncio where b.vig_puntaje = 1 and (a.nom_anuncio like :anu or a.desc_anuncio like :anu) and a.comuna_anuncio = :com and a.vig_anuncio = 1
+group by a.id_anuncio, a.nom_anuncio,a.cat_anuncio 
 union all
-select a.id_anuncio, a.nom_anuncio,a.cat_anuncio 
-from anuncios a inner join cat_anuncio b on a.cat_anuncio = b.id_cat 
-where b.nom_cat like :anu and a.comuna_anuncio = :com and a.vig_anuncio = 1) a";
+select a.id_anuncio, a.nom_anuncio,a.cat_anuncio , ROUND((sum(c.nota_puntaje)/count(c.id_puntaje)), 0) puntaje
+from anuncios a inner join cat_anuncio b on a.cat_anuncio = b.id_cat inner join puntaje c on a.id_anuncio = c.fk_anuncio
+where c.vig_puntaje = 1 and b.nom_cat like :anu and a.comuna_anuncio = :com and a.vig_anuncio = 1
+group by a.id_anuncio, a.nom_anuncio,a.cat_anuncio ) a";
                            
         
             
