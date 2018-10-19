@@ -41,6 +41,7 @@ if( isset($_GET['id']) ){
 
     <!-- Custom styles for this template -->
     <link href="../css/freelancer.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
@@ -83,6 +84,14 @@ if( isset($_GET['id']) ){
       width: 100%;
       height: 100%;
   }
+  #anuncio{text-align: left!important; 
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 10px 10px 10px 10px;
+            -moz-border-radius: 10px 10px 10px 10px;
+            -webkit-border-radius: 10px 10px 10px 10px;
+            border: 0px solid #000000;
+            color: black;}
   </style>
 
   </head>
@@ -132,7 +141,7 @@ if( isset($_GET['id']) ){
 
 
         </div>
-          <div class="row">
+          <div class="row" id="anuncio" name="anuncio">
           <div class="col-8">
              
                 
@@ -178,51 +187,70 @@ if( isset($_GET['id']) ){
                 </div>
             <div class="col-4">
 
+
 <?php
-$hdesde = strtotime( $row['hdesde_anuncio'] ); $hhasta = strtotime( $row['hhasta_anuncio'] ); 
+//$hdesde = date( 'H:i', strtotime( $row['hdesde_anuncio'] )); 
+//$hhasta = date( 'H:i', strtotime( $row['hhasta_anuncio'] )); 
+
+$t1 =  date('His', strtotime($row['hdesde_anuncio'])) ;
+$t2 =  date('His', strtotime($row['hhasta_anuncio']));
+$tn = date('His');
 
 
-$hora_compara =  date('H'); 
+$valida = $fun->check_time($t1, $t2, $tn) ? "si" : "no";
 
 
-if($hdesde<=$hora_compara && $hora_compara<=$hhasta){ 
-      echo "La hora está en el horario 1"; 
-      return; 
-    }   
 
-else 
-    echo "La hora no está en ningún horario"; 
+    if ($valida == 'si') {
+      echo('<span class="font-weight-bold text-success">Disponible <img src="../img/check.gif" alt="Disponible" height="32" width="32"></span><br><br>');
+    }else{
+      echo('<span class="font-weight-bold text-danger">No Disponible <img src="../img/cancel.gif" alt="Disponible" height="32" width="32"></span><br><br>');
+    }
+
+
+
+
+
+
 ?>
 
 
 
                   <div class="form-group">
 
-                    <h4><span class="badge badge-light"><?php echo $row['comuna_anuncio']; ?></span><h4>
-                    <h4><span class="badge badge-light"><?php echo $row['dir_anuncio']; ?></span><h4>
-                    <h4><span class="badge badge-light"><?php echo $row['desc_anuncio']; ?></span><h4>
-                    <h4><span class="badge badge-light">Telefonos de contacto: <?php echo $row['fono']; ?></span><h4>
+                    <span class="font-weight-bold"><?php echo $row['nom_comuna']; ?></span><br>
+                    <span class="font-weight-bold"><?php echo $row['dir_anuncio']; ?></span><br><br>
+                    <span ><?php echo $row['desc_anuncio']; ?></span><br><br>
+                    <span >Telefonos: <?php echo $row['fono']; ?></span><br><br>
 
 
 
                     <?php
                       if ($row['fb'] <> '0') {
-                         echo '<h4><span class="badge badge-light">'.$row['fb'].'</span><h4>';
+                         echo '<a  href="'.$row['fb'].'" target="blank">
+                  <i class="fa fa-facebook-official" style="font-size:32px" ></i>
+                </a>';
                        } 
                     ?>  
                     <?php
                       if ($row['ig'] <> '0') {
-                         echo '<h4><span class="badge badge-light">'.$row['ig'].'</span><h4>';
-                       } 
+                         echo '<a  href="'.$row['ig'].'" target="blank">
+                  <i class="fa fa-instagram" style="font-size:32px" ></i>
+                </a>';
+                      } 
                     ?>  
                     <?php
                       if ($row['tw'] <> '0') {
-                         echo '<h4><span class="badge badge-light">'.$row['tw'].'</span><h4>';
+                         echo '<a  href="'.$row['tw'].'" target="blank">
+                  <i class="fa fa-twitter" style="font-size:32px" ></i>
+                </a>';
                        } 
                     ?>  
                     <?php
                       if ($row['ws'] <> '0') {
-                         echo '<h4><span class="badge badge-light">'.$row['ws'].'</span><h4>';
+                         echo '<a  href="'.$row['ws'].'" target="blank">
+                  <i class="fa fa-desktop" style="font-size:32px" ></i>
+                </a>';
                        } 
                     ?>  
 
@@ -272,7 +300,7 @@ else
                                 <img class="card-img-top" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="Card image">
                                 <div class="card-body">
                                   <h4 class="card-title">'.$row3['nom_anuncio'].'</h4>
-                                  <a href="vista/vistaAnuncio.php?anun='.$row3['id_anuncio'].'" class="btn btn-primary">Ver Mas</a><br>
+                                  <a href="vistaAnuncio.php?id='.$row3['id_anuncio'].'&anu='.$anu.'&com='.$com.'" class="btn btn-primary">Ver Mas</a><br>
                                   '.$puntaje.'
                                 </div>
                               </div>

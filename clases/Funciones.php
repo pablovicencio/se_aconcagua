@@ -6,8 +6,18 @@ class Funciones
 {
 
 
+    /*///////////////////////////////////////
+    Chequear horario de atención
+    //////////////////////////////////////*/
 
 
+    function check_time($t1, $t2, $tn) {
+        if ($t2 >= $t1) {
+                return $t1 <= $tn && $tn < $t2;
+            } else {
+                return ! ($t2 <= $tn && $tn < $t1);
+            }
+        }
 
 
     /*///////////////////////////////////////
@@ -53,10 +63,10 @@ class Funciones
                 $pdo = AccesoDB::getCon();
 
                             
-                                $sql = "select a.nom_anuncio,a.comuna_anuncio,a.dir_anuncio, a.desc_anuncio, CONCAT(a.fono1_anuncio, ' - ', a.fono2_anuncio) fono, 
+                                $sql = "select a.nom_anuncio,c.nom_comuna,a.dir_anuncio, a.desc_anuncio, CONCAT(a.fono1_anuncio, ' - ', a.fono2_anuncio) fono, 
 ifnull(a.fb_anuncio,'0') fb,ifnull(a.ig_anuncio,'0') ig,ifnull(a.tw_anuncio,'0') tw,ifnull(a.ws_anuncio,'0') ws, a.hdesde_anuncio, a.hhasta_anuncio, a.maps_anuncio,
 iFNULL((select ROUND((sum(b.nota_puntaje)/count(b.id_puntaje)), 0) from puntaje b where a.id_anuncio = b.fk_anuncio and b.vig_puntaje = 1),0) puntaje
- from anuncios a where a.id_anuncio = :anu and a.vig_anuncio = 1;";
+ from anuncios a inner join comunas_cl c on a.comuna_anuncio = c.id_comuna where  a.id_anuncio = :anu and a.vig_anuncio = 1;";
                            
                                 
                             
