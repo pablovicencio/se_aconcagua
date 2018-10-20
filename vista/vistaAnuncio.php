@@ -27,7 +27,7 @@ if( isset($_GET['id']) ){
     <meta name="author" content="">
 
     <title>SE Aconcagua - Avisos publicitarios</title>
-
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <!-- Bootstrap core CSS -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -59,15 +59,32 @@ if( isset($_GET['id']) ){
           });  
 
   $(document).ready(function() {
-          $("#formbuscar").submit(function() {    
+          $("#formevaluar").submit(function() {    
             $.ajax({
               type: "POST",
-              url: 'vista/vistaBuscar.php',
-              data:$("#formbuscar").serialize(),
+              url: '../controles/controlEvaluar.php',
+              data:$("#formevaluar").serialize()+"&id_anu=<?php echo $id;?>",
               success: function (result) { 
-              console.log('entra');
-              document.getElementById("container").innerHTML = result;
-                
+              var msg = result.trim();
+
+                switch(msg) {
+                        case '0':
+                            swal("Error", "Verifique los datos de su evaluación", "warning");
+                            break;
+                        case '1':
+                            swal("Error Base de Datos", "Error de base de datos, comuniquese con el administrador", "warning");
+                            break;
+                        default:
+                            swal("Evaluación Ingresada", msg, "success",{
+                                  buttons: false,
+                                  timer: 3000,
+                                });
+                            setTimeout('document.location.reload(true)',3000);
+
+                    }
+
+
+
               },
               error: function(){
                       alert('Verifique los datos')      
@@ -92,6 +109,41 @@ if( isset($_GET['id']) ){
             -webkit-border-radius: 10px 10px 10px 10px;
             border: 0px solid #000000;
             color: black;}
+   #puntos {
+  width: 250px;
+  margin: 0 auto;
+  height: 50px;
+}
+
+#puntos p {
+  text-align: center;
+}
+
+#puntos label {
+  font-size: 20px;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+label {
+  color: grey;
+}
+
+.clasificacion {
+  direction: rtl;
+  unicode-bidi: bidi-override;
+}
+
+label:hover,
+label:hover ~ label {
+  color: orange;
+}
+
+input[type="radio"]:checked ~ label {
+  color: orange;
+}
   </style>
 
   </head>
@@ -175,15 +227,39 @@ if( isset($_GET['id']) ){
                     <a class="carousel-control-next" href="#img" data-slide="next">
                       <span class="carousel-control-next-icon"></span>
                     </a>
-                  </div><br><br>
+                  </div><br>
+                <form class="puntos" name="formevaluar" id="formevaluar">
+                  <p class="clasificacion">
+                    <input type="submit" class="btn btn-primary" id="btnAc" name="btnAc" value="Evaluar">
+                       <input id="radio1" type="radio" name="estrellas" value="7"><!--
+                    --><label for="radio1" style="font-size: 2.5vw";>★</label><!--
+                    --><input id="radio2" type="radio" name="estrellas" value="6"><!--
+                    --><label for="radio2" style="font-size: 2.5vw";>★</label><!--
+                    --><input id="radio3" type="radio" name="estrellas" value="5"><!--
+                    --><label for="radio3" style="font-size: 2.5vw";>★</label><!--
+                    --><input id="radio4"  type="radio" name="estrellas" value="4"><!--
+                    --><label for="radio4" style="font-size: 2.5vw">★</label><!--
+                    --><input id="radio5" type="radio" name="estrellas" value="3"><!--
+                    --><label for="radio5" style="font-size: 2.5vw">★</label><!--
+                    --><input id="radio6" type="radio" name="estrellas" value="2"><!--
+                    --><label for="radio6" style="font-size: 2.5vw">★</label><!--
+                    --><input id="radio7" type="radio" name="estrellas" value="1"><!--
+                    --><label for="radio7" style="font-size: 2.5vw">★</label>
+
+                  </p>
+
+                </form>
+
+                  <br>
 
                   <h4><span class="badge badge-light">Encuentralo en:</span><h4>
+                    <div class="embed-responsive embed-responsive-16by9">
                     <?php
                       
                          echo $row['maps_anuncio'];
                         
                     ?>  
-
+                  </div>
                 </div>
             <div class="col-4">
 
@@ -250,9 +326,12 @@ $valida = $fun->check_time($t1, $t2, $tn) ? "si" : "no";
                       if ($row['ws'] <> '0') {
                          echo '<a  href="'.$row['ws'].'" target="blank">
                   <i class="fa fa-desktop" style="font-size:32px" ></i>
-                </a>';
+                </a><br>';
                        } 
-                    ?>  
+                    ?> 
+
+                    <span class="badge badge-success"><label for="nota" style="color:white;font-size: 1.5vw;">★</label> <?php echo $row['puntaje']; ?></span><br>
+
 
                     
 
@@ -265,7 +344,7 @@ $valida = $fun->check_time($t1, $t2, $tn) ? "si" : "no";
 
                 <div class="form-group">
 
-                    
+
                 </div>
             </div>
 

@@ -1,7 +1,5 @@
 <?php 
-
-   
-   require_once '/clases/Funciones.php';
+   require_once 'clases/Funciones.php';
   
 
   $fun = new Funciones();    
