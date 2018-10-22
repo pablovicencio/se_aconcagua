@@ -7,6 +7,42 @@ class Funciones
 
 
     /*///////////////////////////////////////
+    Cargar Busqueda
+    //////////////////////////////////////*/
+        public function cargar_portafolio($id){
+
+            try{
+                
+                
+                $pdo = AccesoDB::getCon();
+
+               
+
+                    $sql = "select a.id_anuncio, a.nom_anuncio,a.cat_anuncio , 
+IFNULL((select ROUND((sum(b.nota_puntaje)/count(b.id_puntaje)), 0) from puntaje b where a.id_anuncio = b.fk_anuncio and b.vig_puntaje = 1),0) puntaje
+from anuncios a where  a.cat_anuncio = :id and a.comuna_anuncio = 1 and a.vig_anuncio = 1 
+group by a.id_anuncio, a.nom_anuncio,a.cat_anuncio ";
+
+                
+                                
+                            
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+                $stmt->execute();
+
+                $response = $stmt->fetchAll();
+                return $response;
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='index.php';</script>";
+            }
+        }
+
+
+
+
+    /*///////////////////////////////////////
     Chequear horario de atención
     //////////////////////////////////////*/
 
@@ -99,6 +135,22 @@ iFNULL((select ROUND((sum(b.nota_puntaje)/count(b.id_puntaje)), 0) from puntaje 
                 
                 $pdo = AccesoDB::getCon();
 
+                if($com == 0){
+
+                    $sql = "select distinct * from (
+select a.id_anuncio, a.nom_anuncio,a.cat_anuncio , 
+IFNULL((select ROUND((sum(b.nota_puntaje)/count(b.id_puntaje)), 0) from puntaje b where a.id_anuncio = b.fk_anuncio and b.vig_puntaje = 1),0) puntaje
+from anuncios a where  (a.nom_anuncio like :anu or a.desc_anuncio like :anu) and a.comuna_anuncio <> :com and a.vig_anuncio = 1 and a.id_anuncio <> :id
+group by a.id_anuncio, a.nom_anuncio,a.cat_anuncio 
+union all
+select a.id_anuncio, a.nom_anuncio,a.cat_anuncio , 
+IFNULL((select ROUND((sum(c.nota_puntaje)/count(c.id_puntaje)), 0) from puntaje c where a.id_anuncio = c.fk_anuncio and c.vig_puntaje = 1),0) puntaje
+from anuncios a inner join cat_anuncio b on a.cat_anuncio = b.id_cat 
+where b.nom_cat like :anu and a.comuna_anuncio <> :com and a.vig_anuncio = 1 and a.id_anuncio <> :id
+group by a.id_anuncio, a.nom_anuncio,a.cat_anuncio ) a";
+
+                }else{
+
                
 
                     $sql = "select distinct * from (
@@ -112,6 +164,7 @@ IFNULL((select ROUND((sum(c.nota_puntaje)/count(c.id_puntaje)), 0) from puntaje 
 from anuncios a inner join cat_anuncio b on a.cat_anuncio = b.id_cat 
 where b.nom_cat like :anu and a.comuna_anuncio = :com and a.vig_anuncio = 1 and a.id_anuncio <> :id
 group by a.id_anuncio, a.nom_anuncio,a.cat_anuncio ) a";
+}
 
                 
                                 
