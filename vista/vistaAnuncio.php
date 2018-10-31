@@ -11,7 +11,6 @@ if( isset($_GET['id']) ){
   }   
    require_once dirname( __DIR__ ).'/clases/Funciones.php';
   
-
   $fun = new Funciones();   
 
 
