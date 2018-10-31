@@ -54,6 +54,7 @@
               success: function (result) { 
               console.log('entra');
               document.getElementById("container").innerHTML = result;
+              document.getElementById("volver").style.display = "inline";
                 
               },
               error: function(){
@@ -117,7 +118,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
       <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top">SE Aconcagua</a>
+        <a class="navbar-brand js-scroll-trigger" href="index.php">SE Aconcagua</a>
         <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           Menu
           <i class="fas fa-bars"></i>
@@ -175,8 +176,11 @@
 </form>
               
             </div>
+
             <h2 class="font-weight-light mb-0">Busca - Contacta - Evalua</h2>
+            
       </div>
+      <a href="index.php" class="btn btn-primary btn-lg" style="display: none" id="volver" name="volver">Volver</a><br>
     </header>
 
     <!-- Portfolio Grid Section -->
@@ -256,18 +260,13 @@
         <hr class="star-light mb-5">
         <div class="row">
           <div class="col-lg-4 ml-auto">
-            <p class="lead">Freelancer is a free bootstrap theme created by Start Bootstrap. The download includes the complete source files including HTML, CSS, and JavaScript as well as optional LESS stylesheets for easy customization.</p>
+            <p class="lead">Esta plataforma esta desarrollada por y para la comunidad del Valle de Aconcagua. Nuestro equipo multidiciplinario esta atento para resolver todas tus dudas de como anuciarte y como relizar una busqueda optima</p>
           </div>
           <div class="col-lg-4 mr-auto">
-            <p class="lead">Whether you're a student looking to showcase your work, a professional looking to attract clients, or a graphic artist looking to share your projects, this template is the perfect starting point!</p>
+            <p class="lead">No esperes mas y se parte de SEAconcagua!</p>
           </div>
         </div>
-        <!-- <div class="text-center mt-4">
-          <a class="btn btn-xl btn-outline-light" href="#">
-            <i class="fas fa-download mr-2"></i>
-            Download Now!
-          </a>
-        </div> -->
+        
       </div>
     </section>
 
@@ -397,7 +396,7 @@
               <div id="portafolio" name="portafolio"></div>
               <a class="btn btn-primary btn-lg rounded-pill portfolio-modal-dismiss" href="#">
                 <i class="fa fa-close"></i>
-                Cerrar</a>
+                Volver</a>
             </div>
           </div>
         </div>
