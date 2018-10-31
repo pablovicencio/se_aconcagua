@@ -161,10 +161,7 @@ input[type="radio"]:checked ~ label {
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item mx-0 mx-lg-1">
-              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#comunidad">Comunidad SE</a>
-            </li>
-            <li class="nav-item mx-0 mx-lg-1">
-              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#conocenos">Conocenos</a>
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#conocenos">Sugeridos</a>
             </li>
             <li class="nav-item mx-0 mx-lg-1">
               <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contacto">Anunciate!</a>
@@ -187,7 +184,7 @@ input[type="radio"]:checked ~ label {
                                             {
                                                
                                             }   
-                                            echo '<h3>'.$row['nom_anuncio'].'</h3><br>';
+                                            echo '<h2 class=" text-uppercase">'.$row['nom_anuncio'].'</h2><br>';
                                         ?>     
 
 
@@ -355,8 +352,9 @@ $valida = $fun->check_time($t1, $t2, $tn) ? "si" : "no";
             
       </div>
     </header>
+<section class="bg-primary text-white mb-0" id="conocenos">
 
-<h4><span class="badge badge-light">También te puede interesar</span><h4>
+<h3 class="text-center text-uppercase text-white">También te puede interesar</h3>
 
 
 <center>
@@ -390,6 +388,57 @@ $valida = $fun->check_time($t1, $t2, $tn) ? "si" : "no";
               ?>
 
     </center>
+  </section>
+
+    <!-- Contact Section -->
+    <section id="contacto">
+      <div class="container">
+        <h2 class="text-center text-uppercase text-secondary mb-0">Anunciate con nosotros!</h2>
+        <hr class="star-dark mb-5">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
+            <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
+            <form name="sentMessage" id="contactForm" novalidate="novalidate">
+              <div class="control-group">
+                <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                  <label>Nombre</label>
+                  <input class="form-control" id="name" type="text" placeholder="Nombre" required="required" data-validation-required-message="Please enter your name.">
+                  <p class="help-block text-danger"></p>
+                </div>
+              </div>
+              <div class="control-group">
+                <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                  <label>Email</label>
+                  <input class="form-control" id="email" type="email" placeholder="Email" required="required" data-validation-required-message="Please enter your email address.">
+                  <p class="help-block text-danger"></p>
+                </div>
+              </div>
+              <div class="control-group">
+                <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                  <label>Telefono</label>
+                  <input class="form-control" id="phone" type="tel" placeholder="Telefono" required="required" data-validation-required-message="Please enter your phone number.">
+                  <p class="help-block text-danger"></p>
+                </div>
+              </div>
+              <div class="control-group">
+                <div class="form-group floating-label-form-group controls mb-0 pb-2">
+                  <label>Mensaje</label>
+                  <textarea class="form-control" id="message" rows="5" placeholder="Mensaje" required="required" data-validation-required-message="Please enter a message."></textarea>
+                  <p class="help-block text-danger"></p>
+                </div>
+              </div>
+              <br>
+              <div id="success"></div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-xl" id="sendMessageButton">Enviar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
 
        <!-- Footer -->
     <footer class="footer text-center">
