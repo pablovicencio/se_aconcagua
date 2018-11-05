@@ -27,7 +27,7 @@ $anuncio = stripcslashes ($_POST['anuncio']);
 
                 echo (
                         '  <div class="card" >
-                                <img class="card-img-top" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="Card image">
+                                <img class="card-img-top" src="'.$row['img'].'" alt="Card image">
                                 <div class="card-body">
                                   <h4 class="card-title">'.$row['nom_anuncio'].'</h4>
                                   <a href="vista/vistaAnuncio.php?id='.$row['id_anuncio'].'&anu='.$anuncio.'&com='.$comuna.'" class="btn btn-primary">Ver Mas</a><br>

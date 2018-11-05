@@ -19,8 +19,9 @@ class Funciones
                
 
                     $sql = "select a.id_anuncio, a.nom_anuncio,a.cat_anuncio , 
-IFNULL((select ROUND((sum(b.nota_puntaje)/count(b.id_puntaje)), 0) from puntaje b where a.id_anuncio = b.fk_anuncio and b.vig_puntaje = 1),0) puntaje
-from anuncios a where  a.cat_anuncio = :id and a.comuna_anuncio = 1 and a.vig_anuncio = 1 
+IFNULL((select ROUND((sum(b.nota_puntaje)/count(b.id_puntaje)), 0) from puntaje b where a.id_anuncio = b.fk_anuncio and b.vig_puntaje = 1),0) puntaje, 
+IFNULL((select i.img from img_anuncio i where a.id_anuncio = i.fk_id_anuncio order by i.id_img limit 1),'https://www.w3schools.com/bootstrap4/img_avatar1.png') img
+from anuncios a where  a.cat_anuncio = :id  and a.vig_anuncio = 1 
 group by a.id_anuncio, a.nom_anuncio,a.cat_anuncio ";
 
                 
@@ -136,19 +137,42 @@ iFNULL((select ROUND((sum(b.nota_puntaje)/count(b.id_puntaje)), 0) from puntaje 
                 
                 $pdo = AccesoDB::getCon();
 
-                if($com == 0){
+                if($com == -1){
 
                     $sql = "select distinct * from (
 select a.id_anuncio, a.nom_anuncio,a.cat_anuncio , 
-IFNULL((select ROUND((sum(b.nota_puntaje)/count(b.id_puntaje)), 0) from puntaje b where a.id_anuncio = b.fk_anuncio and b.vig_puntaje = 1),0) puntaje
-from anuncios a where  a.comuna_anuncio <> :com and a.vig_anuncio = 1 and a.id_anuncio <> :id
+IFNULL((select ROUND((sum(b.nota_puntaje)/count(b.id_puntaje)), 0) from puntaje b where a.id_anuncio = b.fk_anuncio and b.vig_puntaje = 1),0) puntaje,
+IFNULL((select i.img from img_anuncio i where a.id_anuncio = i.fk_id_anuncio order by i.id_img limit 1),'https://www.w3schools.com/bootstrap4/img_avatar1.png') img
+from anuncios a where  a.comuna_anuncio <> :com and a.vig_anuncio = 1 and a.id_anuncio <> :id a.cat_anuncio = (select z.cat_anuncio from anuncios z where z.id_anuncio = :id)
 group by a.id_anuncio, a.nom_anuncio,a.cat_anuncio 
 union all
 select a.id_anuncio, a.nom_anuncio,a.cat_anuncio , 
-IFNULL((select ROUND((sum(c.nota_puntaje)/count(c.id_puntaje)), 0) from puntaje c where a.id_anuncio = c.fk_anuncio and c.vig_puntaje = 1),0) puntaje
+IFNULL((select ROUND((sum(c.nota_puntaje)/count(c.id_puntaje)), 0) from puntaje c where a.id_anuncio = c.fk_anuncio and c.vig_puntaje = 1),0) puntaje,
+IFNULL((select i.img from img_anuncio i where a.id_anuncio = i.fk_id_anuncio order by i.id_img limit 1),'https://www.w3schools.com/bootstrap4/img_avatar1.png') img
 from anuncios a inner join cat_anuncio b on a.cat_anuncio = b.id_cat 
 where b.nom_cat like :anu and a.comuna_anuncio <> :com and a.vig_anuncio = 1 and a.id_anuncio <> :id
 group by a.id_anuncio, a.nom_anuncio,a.cat_anuncio ) a";
+
+
+
+                }elseif ($com == 0) {
+                    $sql = "select distinct * from (
+select a.id_anuncio, a.nom_anuncio,a.cat_anuncio , 
+IFNULL((select ROUND((sum(b.nota_puntaje)/count(b.id_puntaje)), 0) from puntaje b where a.id_anuncio = b.fk_anuncio and b.vig_puntaje = 1),0) puntaje,
+IFNULL((select i.img from img_anuncio i where a.id_anuncio = i.fk_id_anuncio order by i.id_img limit 1),'https://www.w3schools.com/bootstrap4/img_avatar1.png') img
+from anuncios a where  (a.nom_anuncio like :anu or a.desc_anuncio like :anu)  and a.vig_anuncio = 1 and a.id_anuncio <> :id
+group by a.id_anuncio, a.nom_anuncio,a.cat_anuncio 
+union all
+select a.id_anuncio, a.nom_anuncio,a.cat_anuncio , 
+IFNULL((select ROUND((sum(c.nota_puntaje)/count(c.id_puntaje)), 0) from puntaje c where a.id_anuncio = c.fk_anuncio and c.vig_puntaje = 1),0) puntaje,
+IFNULL((select i.img from img_anuncio i where a.id_anuncio = i.fk_id_anuncio order by i.id_img limit 1),'https://www.w3schools.com/bootstrap4/img_avatar1.png') img
+from anuncios a inner join cat_anuncio b on a.cat_anuncio = b.id_cat 
+where b.nom_cat like :anu  and a.vig_anuncio = 1 and a.id_anuncio <> :id
+group by a.id_anuncio, a.nom_anuncio,a.cat_anuncio ) a";
+                
+
+
+
 
                 }else{
 
@@ -156,12 +180,14 @@ group by a.id_anuncio, a.nom_anuncio,a.cat_anuncio ) a";
 
                     $sql = "select distinct * from (
 select a.id_anuncio, a.nom_anuncio,a.cat_anuncio , 
-IFNULL((select ROUND((sum(b.nota_puntaje)/count(b.id_puntaje)), 0) from puntaje b where a.id_anuncio = b.fk_anuncio and b.vig_puntaje = 1),0) puntaje
+IFNULL((select ROUND((sum(b.nota_puntaje)/count(b.id_puntaje)), 0) from puntaje b where a.id_anuncio = b.fk_anuncio and b.vig_puntaje = 1),0) puntaje,
+IFNULL((select i.img from img_anuncio i where a.id_anuncio = i.fk_id_anuncio order by i.id_img limit 1),'https://www.w3schools.com/bootstrap4/img_avatar1.png') img
 from anuncios a where  (a.nom_anuncio like :anu or a.desc_anuncio like :anu) and a.comuna_anuncio = :com and a.vig_anuncio = 1 and a.id_anuncio <> :id
 group by a.id_anuncio, a.nom_anuncio,a.cat_anuncio 
 union all
 select a.id_anuncio, a.nom_anuncio,a.cat_anuncio , 
-IFNULL((select ROUND((sum(c.nota_puntaje)/count(c.id_puntaje)), 0) from puntaje c where a.id_anuncio = c.fk_anuncio and c.vig_puntaje = 1),0) puntaje
+IFNULL((select ROUND((sum(c.nota_puntaje)/count(c.id_puntaje)), 0) from puntaje c where a.id_anuncio = c.fk_anuncio and c.vig_puntaje = 1),0) puntaje,
+IFNULL((select i.img from img_anuncio i where a.id_anuncio = i.fk_id_anuncio order by i.id_img limit 1),'https://www.w3schools.com/bootstrap4/img_avatar1.png') img
 from anuncios a inner join cat_anuncio b on a.cat_anuncio = b.id_cat 
 where b.nom_cat like :anu and a.comuna_anuncio = :com and a.vig_anuncio = 1 and a.id_anuncio <> :id
 group by a.id_anuncio, a.nom_anuncio,a.cat_anuncio ) a";
@@ -186,7 +212,7 @@ group by a.id_anuncio, a.nom_anuncio,a.cat_anuncio ) a";
                 return $response;
 
             } catch (Exception $e) {
-                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='index.php';</script>";
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); </script>";
             }
         }
 

@@ -70,6 +70,8 @@
 
      function modal(id) {
     console.log(id);
+    document.getElementById("portafolio_titulo").innerHTML = "";
+    document.getElementById("portafolio").innerHTML = "";
     
      $.ajax({
       url: 'controles/controlPortafolio.php',

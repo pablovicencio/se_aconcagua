@@ -223,7 +223,8 @@ input[type="radio"]:checked ~ label {
                     <a class="carousel-control-next" href="#img" data-slide="next">
                       <span class="carousel-control-next-icon"></span>
                     </a>
-                  </div><br>
+                  </div><br><br>
+                  <span ><?php echo $row['desc_anuncio']; ?></span><br><br>
                 <form class="puntos" name="formevaluar" id="formevaluar">
                   <p class="clasificacion">
                     <input type="submit" class="btn btn-primary" id="btnAc" name="btnAc" value="Evaluar">
@@ -292,7 +293,6 @@ $valida = $fun->check_time($t1, $t2, $tn) ? "si" : "no";
 
                     <span class="font-weight-bold"><?php echo $row['nom_comuna']; ?></span><br>
                     <span class="font-weight-bold"><?php echo $row['dir_anuncio']; ?></span><br><br>
-                    <span ><?php echo $row['desc_anuncio']; ?></span><br><br>
                     <span >Telefonos: <?php echo $row['fono']; ?></span><br><br>
 
 
@@ -338,10 +338,7 @@ $valida = $fun->check_time($t1, $t2, $tn) ? "si" : "no";
 
                   </div>
 
-                <div class="form-group">
-
-
-                </div>
+                
             </div>
 
         </div>
@@ -353,37 +350,40 @@ $valida = $fun->check_time($t1, $t2, $tn) ? "si" : "no";
     </header>
 <section class="bg-primary text-white mb-0" id="conocenos">
 
-<h3 class="text-center text-uppercase text-white">También te puede interesar</h3>
+
 
 
 <center>
          <?php   
               
               $re3 = $fun->cargar_cat($com, $anu, $id);
-              foreach($re3 as $row3){
-               $puntaje = '';
+              if (!empty($re3)) {
+              echo '<h3 class="text-center text-uppercase text-white">También te puede interesar</h3>';
+                  foreach($re3 as $row3){
+                   $puntaje = '';
 
-                  for ($i=1; $i <= 7 ; $i++) { 
-                        if ($row3['puntaje'] >= $i) {
-                          $puntaje = $puntaje.'<label for="radio'.$i.'" style="color:orange;font-size: 2.5vw;">★</label>';
-                        }else{
-                          $puntaje = $puntaje.'<label for="radio'.$i.'" style="color:gray;font-size: 2.5vw;">★</label>';
-                        }
+                      for ($i=1; $i <= 7 ; $i++) { 
+                            if ($row3['puntaje'] >= $i) {
+                              $puntaje = $puntaje.'<label for="radio'.$i.'" style="color:orange;font-size: 2.5vw;">★</label>';
+                            }else{
+                              $puntaje = $puntaje.'<label for="radio'.$i.'" style="color:gray;font-size: 2.5vw;">★</label>';
+                            }
+                      }
+
+                    echo (
+                            '  <div class="card" >
+                                    <img class="card-img-top" src="'.$row3['img'].'" alt="Card image">
+                                    <div class="card-body">
+                                      <h4 class="card-title">'.$row3['nom_anuncio'].'</h4>
+                                      <a href="vistaAnuncio.php?id='.$row3['id_anuncio'].'&anu='.$anu.'&com='.$com.'" class="btn btn-primary">Ver Mas</a><br>
+                                      '.$puntaje.'
+                                    </div>
+                                  </div>
+                                  '
+                      );
+                  
                   }
-
-                echo (
-                        '  <div class="card" >
-                                <img class="card-img-top" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="Card image">
-                                <div class="card-body">
-                                  <h4 class="card-title">'.$row3['nom_anuncio'].'</h4>
-                                  <a href="vistaAnuncio.php?id='.$row3['id_anuncio'].'&anu='.$anu.'&com='.$com.'" class="btn btn-primary">Ver Mas</a><br>
-                                  '.$puntaje.'
-                                </div>
-                              </div>
-                              '
-                  );
-              
-              }
+            }
               ?>
 
     </center>
