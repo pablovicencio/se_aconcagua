@@ -1,5 +1,4 @@
 <?php
-session_start();
 
  if( isset($_POST['estrellas']) and isset($_POST['id_anu']) ){
   		//Si la sesión esta seteada no hace nada

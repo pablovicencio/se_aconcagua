@@ -55,6 +55,7 @@
               console.log('entra');
               document.getElementById("container").innerHTML = result;
               document.getElementById("volver").style.display = "inline";
+              window.scroll(0, 0);
                 
               },
               error: function(){
@@ -136,6 +137,17 @@
             <li class="nav-item mx-0 mx-lg-1">
               <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contacto">Anunciate!</a>
             </li>
+                                      <?php 
+                                        $re1 = $fun->busca_promo();   
+                                         if (!empty($re1)) {
+                                           echo '<li class="nav-item mx-0 mx-lg-1">
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="vista/vistaPromociones.php?id=1">PROMOCIONES!</a>
+            </li>';
+                                          }
+                                        ?>       
+
+
+
           </ul>
         </div>
       </div>
@@ -184,6 +196,11 @@
       </div>
       <a href="index.php" class="btn btn-primary btn-lg" style="display: none" id="volver" name="volver">Volver</a><br>
     </header>
+
+
+
+
+
 
     <!-- Portfolio Grid Section -->
     <section class="portfolio" id="comunidad">

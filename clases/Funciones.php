@@ -6,6 +6,82 @@ class Funciones
 {
 
 
+
+   /*///////////////////////////////////////
+    Buscar Promocion
+    //////////////////////////////////////*/
+        public function busca_promocion($id){
+
+            try{
+                
+                
+                $pdo = AccesoDB::getCon();
+
+               
+
+                    $sql = "select b.id_promo, a.nom_anuncio, b.desc_promo, b.img_promo, b.duracion_promo, qr_promo, a.maps_anuncio
+                            from anuncios a inner join promo b on a.id_anuncio = b.fk_id_anuncio 
+                            where b.vig_promo = 1 and b.id_promo = :id";
+
+                
+                                
+                            
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+                $stmt->execute();
+
+                $response = $stmt->fetchAll();
+                return $response;
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='index.php';</script>";
+            }
+        }
+
+
+
+
+
+
+   /*///////////////////////////////////////
+    Buscar Promociones
+    //////////////////////////////////////*/
+        public function busca_promo(){
+
+            try{
+                
+                
+                $pdo = AccesoDB::getCon();
+
+               
+
+                    $sql = "select b.id_promo, a.nom_anuncio, b.desc_promo, b.img_promo
+                            from anuncios a inner join promo b on a.id_anuncio = b.fk_id_anuncio 
+                            where b.vig_promo = 1";
+
+                
+                                
+                            
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute();
+
+                $response = $stmt->fetchAll();
+                return $response;
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='index.php';</script>";
+            }
+        }
+
+
+
+
+
+
+
+
     /*///////////////////////////////////////
     Cargar Busqueda
     //////////////////////////////////////*/
