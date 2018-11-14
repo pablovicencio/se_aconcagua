@@ -219,7 +219,7 @@ iFNULL((select ROUND((sum(b.nota_puntaje)/count(b.id_puntaje)), 0) from puntaje 
 select a.id_anuncio, a.nom_anuncio,a.cat_anuncio , 
 IFNULL((select ROUND((sum(b.nota_puntaje)/count(b.id_puntaje)), 0) from puntaje b where a.id_anuncio = b.fk_anuncio and b.vig_puntaje = 1),0) puntaje,
 IFNULL((select i.img from img_anuncio i where a.id_anuncio = i.fk_id_anuncio order by i.id_img limit 1),'https://www.w3schools.com/bootstrap4/img_avatar1.png') img
-from anuncios a where  a.comuna_anuncio <> :com and a.vig_anuncio = 1 and a.id_anuncio <> :id a.cat_anuncio = (select z.cat_anuncio from anuncios z where z.id_anuncio = :id)
+from anuncios a where  a.comuna_anuncio <> :com and a.vig_anuncio = 1 and  a.id_anuncio <> :id and a.cat_anuncio = (select z.cat_anuncio from anuncios z where z.id_anuncio = :id)
 group by a.id_anuncio, a.nom_anuncio,a.cat_anuncio 
 union all
 select a.id_anuncio, a.nom_anuncio,a.cat_anuncio , 

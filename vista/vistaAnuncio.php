@@ -149,26 +149,35 @@ input[type="radio"]:checked ~ label {
 
   <body id="page-top">
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
-      <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="../index.php">SE Aconcagua</a>
-        <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          Menu
-          <i class="fas fa-bars"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item mx-0 mx-lg-1">
-              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#conocenos">Sugeridos</a>
-            </li>
-            <li class="nav-item mx-0 mx-lg-1">
-              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contacto">Anunciate!</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+   
+
+
+
+      <nav class="navbar navbar-expand-sm bg-secondary fixed-top text-uppercase" id="mainNav">
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="../index.php" id="link-home-mob" name="link-home-mob"><i class="fa fa-home" aria-hidden="true"></i></a><a class="navbar-brand js-scroll-trigger" href="../index.php"  id="link-home" name="link-home">SE Aconcagua</a>
+              <ul class="navbar-nav ml-auto" >
+
+                    <li class="nav-item mx-0 mx-lg-1">
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#sugeridos" id="link-con-mob" name="link-con-mob"><i class="fa fa-bookmark" aria-hidden="true"></i></a><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#sugeridos" id="link-con" name="link-con">Sugeridos</a>
+                    </li>
+                    <li class="nav-item mx-0 mx-lg-1">
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#anunciate" id="link-anu-mob" name="link-anu-mob"><i class="fa fa-space-shuttle" aria-hidden="true"></i></a><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contacto" id="link-anu" name="link-anu">Anunciate!</a>
+                    </li>
+                                      <?php 
+                                        $re1 = $fun->busca_promo();   
+                                         if (!empty($re1)) {
+                                           echo '<li class="nav-item mx-0 mx-lg-1">
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="vistaPromociones.php?id=1" id="link-promo-mob" name="link-promo-mob"><i class="fa fa-bell" aria-hidden="true"></i></a><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="vistaPromociones.php?id=1" id="link-promo" name="link-promo">PROMOCIONES!</a>
+            </li>';
+                                          }
+                                        ?>       
+
+
+
+                
+              </ul>
+  </nav>
+
   <div id="loading" style="display: none;">
     <center><img src="img/load.gif"></center>
   </div>
@@ -348,7 +357,7 @@ $valida = $fun->check_time($t1, $t2, $tn) ? "si" : "no";
             
       </div>
     </header>
-<section class="bg-primary text-white mb-0" id="conocenos">
+<section class="bg-primary text-white mb-0" id="sugeridos">
 
 
 
@@ -356,7 +365,7 @@ $valida = $fun->check_time($t1, $t2, $tn) ? "si" : "no";
 <center>
          <?php   
               
-              $re3 = $fun->cargar_cat($com, $anu, $id);
+              $re3 = $fun->cargar_cat(-1, $anu, $id);
               if (!empty($re3)) {
               echo '<h3 class="text-center text-uppercase text-white">También te puede interesar</h3>';
                   foreach($re3 as $row3){
