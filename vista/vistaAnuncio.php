@@ -204,69 +204,37 @@ input[type="radio"]:checked ~ label {
                 
 
                   <div id="img" class="carousel slide" data-ride="carousel">
-                    <!-- The slideshow -->
-                    <div class="carousel-inner">
-                    <?php 
-                                        $i=1;
-                                        $re1 = $fun->cargar_imgs($id);   
-                                        foreach($re1 as $row1) { 
-                                          
-                                              if ($i==1) {
-                                                $img=' active';
-                                              }else
-                                              {$img='';}
-                                               echo '<div class="carousel-item'.$img.'">
-                        <img src="'.$row1['img'].'" alt="'.$row['nom_anuncio'].'" width="1100" height="500">
-                      </div>';
-                                          $i++;
+                      <!-- The slideshow -->
+                      <div class="carousel-inner">
+                      <?php 
+                                          $i=1;
+                                          $re1 = $fun->cargar_imgs($id);   
+                                          foreach($re1 as $row1) { 
+                                            
+                                                if ($i==1) {
+                                                  $img=' active';
+                                                }else
+                                                {$img='';}
+                                                 echo '<div class="carousel-item'.$img.'">
+                          <img src="'.$row1['img'].'" alt="'.$row['nom_anuncio'].'" width="1100" height="500">
+                        </div>';
+                                            $i++;
 
-                                            }  
-              
-                                        ?>   
-                    </div>
-                    
-                    <!-- Left and right controls -->
-                    <a class="carousel-control-prev" href="#img" data-slide="prev">
-                      <span class="carousel-control-prev-icon"></span>
-                    </a>
-                    <a class="carousel-control-next" href="#img" data-slide="next">
-                      <span class="carousel-control-next-icon"></span>
-                    </a>
-                  </div><br><br>
-                  <span ><?php echo $row['desc_anuncio']; ?></span><br><br>
-                <form class="puntos" name="formevaluar" id="formevaluar">
-                  <p class="clasificacion">
-                    <input type="submit" class="btn btn-primary" id="btnAc" name="btnAc" value="Evaluar">
-                       <input id="radio1" type="radio" name="estrellas" value="7"><!--
-                    --><label for="radio1" style="font-size: 2.5vw";>★</label><!--
-                    --><input id="radio2" type="radio" name="estrellas" value="6"><!--
-                    --><label for="radio2" style="font-size: 2.5vw";>★</label><!--
-                    --><input id="radio3" type="radio" name="estrellas" value="5"><!--
-                    --><label for="radio3" style="font-size: 2.5vw";>★</label><!--
-                    --><input id="radio4"  type="radio" name="estrellas" value="4"><!--
-                    --><label for="radio4" style="font-size: 2.5vw">★</label><!--
-                    --><input id="radio5" type="radio" name="estrellas" value="3"><!--
-                    --><label for="radio5" style="font-size: 2.5vw">★</label><!--
-                    --><input id="radio6" type="radio" name="estrellas" value="2"><!--
-                    --><label for="radio6" style="font-size: 2.5vw">★</label><!--
-                    --><input id="radio7" type="radio" name="estrellas" value="1"><!--
-                    --><label for="radio7" style="font-size: 2.5vw">★</label>
-
-                  </p>
-
-                </form>
-
-                  <br>
-
-                  <h4><span class="badge badge-light">Encuentralo en:</span><h4>
-                    <div class="embed-responsive embed-responsive-16by9">
-                    <?php
+                                              }  
+                
+                                          ?>   
+                      </div>
                       
-                         echo $row['maps_anuncio'];
-                        
-                    ?>  
-                  </div>
-                </div>
+                      <!-- Left and right controls -->
+                      <a class="carousel-control-prev" href="#img" data-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                      </a>
+                      <a class="carousel-control-next" href="#img" data-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                      </a>
+                    </div>
+                </div><br><br>
+
             <div class="col-4">
 
 
@@ -349,6 +317,41 @@ $valida = $fun->check_time($t1, $t2, $tn) ? "si" : "no";
 
                 
             </div>
+            <div class="col-12">
+                  <span ><?php echo $row['desc_anuncio']; ?></span><br><br>
+                <form class="puntos" name="formevaluar" id="formevaluar">
+                  <p class="clasificacion">
+                    <input type="submit" class="btn btn-primary" id="btnAc" name="btnAc" value="Evaluar">
+                       <input id="radio1" type="radio" name="estrellas" value="7"><!--
+                    --><label for="radio1" style="font-size: 3rem";>★</label><!--
+                    --><input id="radio2" type="radio" name="estrellas" value="6"><!--
+                    --><label for="radio2" style="font-size: 3rem";>★</label><!--
+                    --><input id="radio3" type="radio" name="estrellas" value="5"><!--
+                    --><label for="radio3" style="font-size: 3rem";>★</label><!--
+                    --><input id="radio4"  type="radio" name="estrellas" value="4"><!--
+                    --><label for="radio4" style="font-size: 3rem">★</label><!--
+                    --><input id="radio5" type="radio" name="estrellas" value="3"><!--
+                    --><label for="radio5" style="font-size: 3rem">★</label><!--
+                    --><input id="radio6" type="radio" name="estrellas" value="2"><!--
+                    --><label for="radio6" style="font-size: 3rem">★</label><!--
+                    --><input id="radio7" type="radio" name="estrellas" value="1"><!--
+                    --><label for="radio7" style="font-size: 3rem">★</label>
+
+                  </p>
+
+                </form>
+
+                  <br>
+
+                  <h4><span class="badge badge-light">Encuentralo en:</span><h4>
+                    <div class="embed-responsive embed-responsive-16by9">
+                    <?php
+                      
+                         echo $row['maps_anuncio'];
+                        
+                    ?>  
+                  </div>
+                </div>
 
         </div>
    
@@ -373,9 +376,9 @@ $valida = $fun->check_time($t1, $t2, $tn) ? "si" : "no";
 
                       for ($i=1; $i <= 7 ; $i++) { 
                             if ($row3['puntaje'] >= $i) {
-                              $puntaje = $puntaje.'<label for="radio'.$i.'" style="color:orange;font-size: 2.5vw;">★</label>';
+                              $puntaje = $puntaje.'<label for="radio'.$i.'" style="color:orange;font-size: 2rem;">★</label>';
                             }else{
-                              $puntaje = $puntaje.'<label for="radio'.$i.'" style="color:gray;font-size: 2.5vw;">★</label>';
+                              $puntaje = $puntaje.'<label for="radio'.$i.'" style="color:gray;font-size: 2.rem;">★</label>';
                             }
                       }
 

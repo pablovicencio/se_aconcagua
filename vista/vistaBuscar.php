@@ -19,9 +19,9 @@ $anuncio = stripcslashes ($_POST['anuncio']);
 
                   for ($i=1; $i <= 7 ; $i++) { 
                         if ($row['puntaje'] >= $i) {
-                          $puntaje = $puntaje.'<label for="radio'.$i.'" style="color:orange;font-size: 2.5vw;">★</label>';
+                          $puntaje = $puntaje.'<label for="radio'.$i.'" style="color:orange;font-size: 2rem;">★</label>';
                         }else{
-                          $puntaje = $puntaje.'<label for="radio'.$i.'" style="color:gray;font-size: 2.5vw;">★</label>';
+                          $puntaje = $puntaje.'<label for="radio'.$i.'" style="color:gray;font-size: 2rem;">★</label>';
                         }
                   }
 
